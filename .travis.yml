@@ -1,9 +1,24 @@
-# This provides us with GCC binary support so we can run bash
 language: generic
-
+include:
+- os: linux
+addons:
+  apt:
+    update: true
 sudo: required
-
-script: 
-
-after_success: 
-
+git:
+  depth: 22
+before_script:
+- sudo apt-get install devscripts debhelper
+script:
+- chmod +x debuild.sh
+- "./debuild.sh |& tee log.txt"
+notifications: 
+slack: fossasia:3pMkQrSogvEMfnu9aJDW2ZYC
+deploy:
+  provider: releases
+  api_key:
+    secure: M9Za5YYVxYFcm6z9FN1B9fP1v9/RtgRIEhnwtc+d5fhJ4SM9C5vWZU319dxKzSg5Vy7sLuHkmhgC/lHV3TBbrU3QldLU8m0AHLT4KkDgZ+teKiFrRcoFJ+zHhfKlfSfQHhmQbgBHGXcvkxq6mD2u8dr7eW2MOodvVp6ATwq2BVtjr/p6yC7HGkWmNpVo6rZUhGLKcsQFtG0qTpIG5ZPTVJIgGlCyjKzrJhgiIiywRHoQGGU2Ib1rigDWz5ycs9Nzz4pi9o6xl2eSQESHOMEva+abj+inOp6IgMArbyct2IZU5k5CRJ1HhhWPpsV8i/dNSs53xhCbIQkaHsfcVHM2IO571q90BuvCym1+3/0DfhcqRRJEUwaQPS/VGLH+sOQ5ZZ7iCLkJyditOYsBoikNMyESbKSaPkSESgq/3cADaQQ86Fx7JicUmASro0sxtIweZPW1UzElTOf/A74vmQGXVW/wb9SKI4XJxDDdhvttTVTM0DY/kYBpKRfcO/dL8EwBg5mJRAc+BgvHm/mtsgpiD0l+p/pkBe/PGxs5G6KbhjAF/IBoU1MPSNG254EZIJIolFzkpkoPNpTz3H1p9wu/+ZcMxXX7uxdeqWqLgwWvrhoNrBr1mBfet+C9vSXFhQnhnUFHPrdNIlfCtpjGtetkb8hKjEKDzRrhqlBP5HvBU4Y=
+  file: ./systemlock_0.1-1_all.deb
+  on:
+    repo: pranav1698/meilix-systemlock
+    branch: tests
