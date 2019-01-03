@@ -5,6 +5,7 @@ addons:
   apt:
     update: true
 sudo: required
+dist: xenial
 git:
   depth: 22
 before_script:
