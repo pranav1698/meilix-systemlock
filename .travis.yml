@@ -13,5 +13,8 @@ before_script:
 script:
 - chmod +x debuild.sh
 - "./debuild.sh |& tee log.txt"
+after_script:
+ - export lock_package="`echo systemlock_*_all.deb`"
+ - cat systemlock_*_all.deb > "/home/travis/${lock_package}"
 notifications: 
 slack: fossasia:3pMkQrSogvEMfnu9aJDW2ZYC
